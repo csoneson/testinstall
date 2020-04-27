@@ -38,6 +38,12 @@ jobs:
           (object <- remotes:::upgradable_packages(object, upgrade = "default", quiet = FALSE))
           print("-----")
           (unavailable_on_cran <- object$diff == remotes:::UNAVAILABLE & object$is_cran)
-          print("------")
+          print("----- -")
           (unknown_remotes <- (object$diff == remotes:::UNAVAILABLE | object$diff == remotes:::UNINSTALLED) & !object$is_cran)
+          print("----- --")
+          (ahead_of_cran <- object$diff == remotes:::AHEAD & object$is_cran)
+          print("----- ---")
+          (behind <- is.na(object$installed) | object$diff < remotes:::CURRENT)
+          print("----- ----")
+          (any(object$is_cran & !unavailable_on_cran & behind))
         shell: Rscript {0}
