@@ -51,6 +51,6 @@ jobs:
           print("----- ----- -")
           (object$package[object$is_cran & behind])
           print("----- ----- --")
-          install_packages(object$package[object$is_cran & behind], repos = r$repos,
+          remotes:::install_packages(object$package[object$is_cran & behind], repos = r$repos,
                  type = r$pkg_type, dependencies = TRUE, quiet = FALSE)
         shell: Rscript {0}
