@@ -31,6 +31,6 @@ jobs:
       
       - name: Install packages
         run: |
-          install.packages('BiocManager')
-          BiocManager::install('TxDb.Hsapiens.UCSC.hg19.knownGene')
+          install.packages('remotes')
+          remotes::install_bioc('TxDb.Hsapiens.UCSC.hg19.knownGene')
         shell: Rscript {0}
