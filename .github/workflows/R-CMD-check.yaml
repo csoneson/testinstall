@@ -31,5 +31,5 @@ jobs:
       - name: Install packages
         run: |
           install.packages(c('remotes', 'BiocManager'))
-          install.packages(c("TxDb.Hsapiens.UCSC.hg19.knownGene","IRanges","GenomeInfoDb"), repos = c(getOption('repos'), BiocManager::repositories()), type = "both", dependencies = TRUE)
+          BiocManager::install(c("TxDb.Hsapiens.UCSC.hg19.knownGene","IRanges","GenomeInfoDb"))
         shell: Rscript {0}
