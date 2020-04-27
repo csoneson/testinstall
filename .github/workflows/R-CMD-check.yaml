@@ -46,4 +46,7 @@ jobs:
           (behind <- is.na(object$installed) | object$diff < remotes:::CURRENT)
           print("----- ----")
           (any(object$is_cran & !unavailable_on_cran & behind))
+          print("----- -----")
+          (r <- object$remote[object$is_cran & behind][[1]])
+          (object$package[object$is_cran & behind])
         shell: Rscript {0}
