@@ -51,5 +51,5 @@ jobs:
           print("----- ----- -")
           (object$package[object$is_cran & behind])
           print("----- ----- --")
-          install.packages("TxDb.Hsapiens.UCSC.hg19.knownGene", repos = c(getOption('repos'), BiocManager::repositories()), type = "both", dependencies = TRUE)
+          install.packages(object$package[object$is_cran & behind], repos = c(getOption('repos'), BiocManager::repositories()), type = "both", dependencies = TRUE)
         shell: Rscript {0}
