@@ -32,5 +32,8 @@ jobs:
       - name: Install packages
         run: |
           install.packages(c('remotes', 'BiocManager'))
-          print(remotes:::package_deps('TxDb.Hsapiens.UCSC.hg19.knownGene', repos = c(getOption('repos'), BiocManager::repositories()), type = "both"))
+          (object = remotes:::package_deps('TxDb.Hsapiens.UCSC.hg19.knownGene', repos = c(getOption('repos'), BiocManager::repositories()), type = "both"))
+          (object <- remotes:::upgradable_packages(object, upgrade = "default", quiet = FALSE))
+          (unavailable_on_cran <- object$diff == UNAVAILABLE & object$is_cran)
+          (unknown_remotes <- (object$diff == UNAVAILABLE | object$diff == UNINSTALLED) & !object$is_cran)
         shell: Rscript {0}
