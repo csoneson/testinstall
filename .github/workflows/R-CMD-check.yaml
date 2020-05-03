@@ -31,5 +31,9 @@ jobs:
       - name: Install packages
         run: |
           install.packages(c('remotes', 'BiocManager'))
-          BiocManager::install(c("TxDb.Hsapiens.UCSC.hg19.knownGene","IRanges","GenomeInfoDb"))
+          pkgs.use <- c("dplyr", "ggplot2", "tidyr", "limma", "edgeR",
+               "S4Vectors", "DRIMSeq", "SingleCellExperiment", "tximeta", "msigdbr")
+          BiocManager::install(pkgs.use,
+                               update = FALSE, dependencies = TRUE,
+                               Ncpus = 2L)
         shell: Rscript {0}
