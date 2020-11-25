@@ -41,9 +41,7 @@ jobs:
       - name: Install system dependencies (mac)
         if: runner.os == 'macOS'
         run: |
-          brew install --with-libressl curl
-          sudo cp /usr/bin/curl-config /usr/bin/curl-config.bak
-          sudo cp /usr/local/opt/curl/bin/curl-config /usr/bin/curl-config
+          brew install curl-openssl
         
       - name: Check curl version
         if: runner.os != 'Windows'
