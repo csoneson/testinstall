@@ -38,6 +38,10 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get -y install libcurl4-openssl-dev
           
+      - name: Check curl version
+        if: runner.os != 'Windows'
+        run: curl --version
+      
       - name: Install and load packages
         run: |
           install.packages("RCurl")
