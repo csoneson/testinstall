@@ -49,7 +49,9 @@ jobs:
 
       - name: Check curl version
         if: runner.os != 'Windows'
-        run: curl --version
+        run: |
+          echo $PATH
+          curl --version
       
       - name: Install and load packages
         run: |
