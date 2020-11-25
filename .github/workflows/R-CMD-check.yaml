@@ -16,7 +16,10 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macOS-latest, r: '4.0'}
+        - { os: windows-latest, r: 'devel', bioc: 'devel'}
+        - { os: macOS-latest, r: 'devel', bioc: 'devel'}
+        - { os: macOS-latest, r: 'release', bioc: '3.12'}
+        - { os: ubuntu-16.04, r: 'devel', bioc: 'devel', cran: "https://demo.rstudiopm.com/all/__linux__/xenial/latest"}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -28,26 +31,11 @@ jobs:
         with:
           r-version: ${{ matrix.config.r }}
       
-      - name: Install packages
+      - name: Install and load packages
         run: |
-          paths <- .libPaths()
-          print(paths)
-          (mirror <- getOption("repos"))
-          pkgs <- c("dplyr", "ggplot2", "tidyr", "limma", "edgeR",
-               "S4Vectors", "DRIMSeq", "SingleCellExperiment", "tximeta", "msigdbr")
-          isBiocM <- "BiocManager" %in% installed.packages()[, 1]
-          if (!isBiocM) {
-            install.packages("BiocManager", repos = "http://cran.rstudio.com/",
-                             lib = .libPaths()[1])
-          }
-          isInstalled <- pkgs %in% installed.packages(lib.loc = .libPaths()[1])[, 1]
-          BiocManager::install(pkgs[!isInstalled],
-                               update = FALSE, dependencies = TRUE,
-                               lib = .libPaths()[1], Ncpus = 2L)
-          pkg.load <- lapply(pkgs, FUN = function(x) {
-            x[!(x %in% installed.packages(.libPaths()[1])[, "Package"])]
-          })
-          suppressPackageStartupMessages(
-            lapply(pkgs, library, character.only = TRUE)
-          )
+          install.packages("RCurl")
+          library(RCurl)
+          install.packages("BiocManager")
+          BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE)
+          BiocManager::install("BiocCheck")
         shell: Rscript {0}
