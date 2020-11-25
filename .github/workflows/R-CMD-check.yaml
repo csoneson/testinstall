@@ -44,7 +44,7 @@ jobs:
       
       - name: Install and load packages
         run: |
-          install.packages("RCurl")
+          install.packages("RCurl", type = "source")
           library(RCurl)
           install.packages("BiocManager")
           BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE)
