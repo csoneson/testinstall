@@ -38,6 +38,11 @@ jobs:
           RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
         run: |
           sudo apt-get update && sudo apt-get -y install libcurl4-openssl-dev
+
+      - name: Install system dependencies (mac)
+        if: runner.os == 'macOS'
+        run: |
+          brew install curl --with-nghttp2
           
       - name: Check curl version
         if: runner.os != 'Windows'
