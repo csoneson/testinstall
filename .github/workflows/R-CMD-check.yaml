@@ -31,11 +31,29 @@ jobs:
         with:
           r-version: ${{ matrix.config.r }}
       
+      - name: Install system dependencies
+        if: runner.os == 'Linux'
+        env:
+          RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
+        run: |
+          sudo apt-get update && sudo apt-get -y install libcurl4-openssl-dev
+          
       - name: Install and load packages
         run: |
           install.packages("RCurl")
           library(RCurl)
           install.packages("BiocManager")
           BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE)
-          BiocManager::install("BiocCheck")
+          BiocManager::install(c("BiocCheck", "UniProt.ws"))
+          library(UniProt.ws)
+          up <- UniProt.ws(taxId = 9606)
+          select(up, keys=c("P31946","P62258"), columns=c("PDB","SEQUENCE"), keytype="UNIPROTKB")
         shell: Rscript {0}
+
+      - name: Session info
+        run: |
+          options(width = 100)
+          pkgs <- installed.packages()[, "Package"]
+          sessioninfo::session_info(pkgs, include_base = TRUE)
+        shell: Rscript {0}
+
