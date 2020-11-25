@@ -39,19 +39,11 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get -y install libcurl4-openssl-dev
           
-      - name: Install system dependencies (mac)
-        if: runner.os == 'macOS'
-        run: |
-          brew install libressl
-          echo 'export PATH="/usr/local/opt/libressl/bin:$PATH"' >> /Users/runner/.bash_profile
-          export LDFLAGS="-L/usr/local/opt/libressl/lib"
-          export CPPFLAGS="-I/usr/local/opt/libressl/include"
-          export PKG_CONFIG_PATH="/usr/local/opt/libressl/lib/pkgconfig"
-
       - name: Check curl version
         if: runner.os != 'Windows'
         run: |
           echo $PATH
+          CURL_SSL_BACKEND=secure-transport
           which curl
           curl --version
       
