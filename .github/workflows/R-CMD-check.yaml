@@ -39,12 +39,16 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get -y install libcurl4-openssl-dev
 
+      - name: Set curl-config path (mac)
+        if: runner.os == 'macOS'
+        run: |
+          sudo cp /usr/bin/curl-config /usr/local/opt/curl/bin/curl-config 
+          
       - name: Install RCurl (mac)
         if: runner.os == 'macOS'
         run: |
           install.packages("RCurl", type = "source", configure.args = "--libdir=/usr/lib")
         shell: Rscript {0}
-          
           
       - name: Check curl version
         if: runner.os != 'Windows'
