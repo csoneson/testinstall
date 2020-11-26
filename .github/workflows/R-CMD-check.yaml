@@ -42,14 +42,14 @@ jobs:
       - name: Set curl-config path (mac)
         if: runner.os == 'macOS'
         run: |
-          sudo cp /usr/bin/curl-config /usr/local/opt/curl/bin/curl-config 
-          
-      - name: Install RCurl (mac)
-        if: runner.os == 'macOS'
-        run: |
-          install.packages("RCurl", type = "source", configure.args = "--libdir=/usr/lib")
-        shell: Rscript {0}
-          
+          curl-config --cflags
+          curl-config --libs
+          curl-config --version
+          sudo cp /usr/bin/curl-config /usr/local/opt/curl/bin/curl-config
+          curl-config --cflags
+          curl-config --libs
+          curl-config --version
+
       - name: Check curl version
         if: runner.os != 'Windows'
         run: |
