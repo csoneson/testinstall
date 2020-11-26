@@ -23,7 +23,6 @@ jobs:
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-      CURL_SSL_BACKEND: secure-transport
 
     steps:
       - uses: actions/checkout@v2
@@ -39,28 +38,16 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get -y install libcurl4-openssl-dev
 
-      - name: Set curl-config path (mac)
-        if: runner.os == 'macOS'
-        run: |
-          curl-config --cflags
-          curl-config --libs
-          curl-config --version
-          sudo cp /usr/bin/curl-config /usr/local/opt/curl/bin/curl-config
-          curl-config --cflags
-          curl-config --libs
-          curl-config --version
-
       - name: Check curl version
         if: runner.os != 'Windows'
         run: |
           echo $PATH
-          CURL_SSL_BACKEND=secure-transport
           which curl
           curl --version
       
       - name: Install and load packages
         run: |
-          install.packages("RCurl", type = "source")
+          install.packages("RCurl", type = "source", configure.vars="CURL_CONFIG=/usr/bin/curl-config")
           library(RCurl)
           install.packages("BiocManager")
           BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE)
