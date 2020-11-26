@@ -46,8 +46,10 @@ jobs:
           curl --version
       
       - name: Install and load packages
+        env: 
+          CURL_CONFIG: /usr/bin/curl-config
         run: |
-          install.packages("RCurl", type = "source", configure.vars="CURL_CONFIG=/usr/bin/curl-config")
+          install.packages("RCurl", type = "source")
           library(RCurl)
           install.packages("BiocManager")
           BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE)
