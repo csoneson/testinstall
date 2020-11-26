@@ -42,7 +42,7 @@ jobs:
       - name: Install RCurl (mac)
         if: runner.os == 'macOS'
         run: |
-          install.packages("RCurl", type = "source", configure.args = "--libdir=/usr/lib"))
+          install.packages("RCurl", type = "source", configure.args = "--libdir=/usr/lib")
         shell: Rscript {0}
           
           
