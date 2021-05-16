@@ -19,7 +19,7 @@ jobs:
 
       - name: create conda environment
         run: |
-          conda env create --file environment_R.yml
+          conda env create --file environment_R.yaml
           
       - name: install package
         run: |
