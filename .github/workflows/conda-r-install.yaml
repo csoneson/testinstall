@@ -27,6 +27,7 @@ jobs:
 
       - name: upload artifact
         uses: actions/upload-artifact@v1
+        if: failure()
         with:
           name: pkg_install_rout
           path: pkg_install.Rout
