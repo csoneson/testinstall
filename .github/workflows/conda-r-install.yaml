@@ -24,3 +24,9 @@ jobs:
           echo -e 'MAKEFLAGS = -j8' > $HOME/.R/Makevars
           echo 'options(Ncpus = 8)' > $HOME/.Rprofile
           snakemake --use-conda --cores 2
+
+      - name: upload artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: pkg_install_rout
+          path: pkg_install.Rout
