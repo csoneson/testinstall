@@ -19,11 +19,11 @@ jobs:
 
       - name: create conda environment
         run: |
-          conda env create --file environment_R.yml --name envr
+          conda env create --file environment_R.yml
           
       - name: install package
         run: |
-          conda activate envr
+          conda activate environment_R
           Rscript -e "install.packages('units')"
           conda deactivate
 
