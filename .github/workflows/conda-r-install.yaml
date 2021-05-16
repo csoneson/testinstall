@@ -1,0 +1,30 @@
+on:
+  push:
+
+name: conda-R-install
+
+jobs:
+  conda-R-install:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: setup conda
+        uses: s-weigand/setup-conda@v1.0.5
+        with:
+          activate-conda: true
+          update-conda: true
+          conda-channels: 'bioconda,conda-forge,defaults'
+
+      - name: create conda environment
+        run: |
+          conda env create --file environment_R.yml --name envr
+          
+      - name: install package
+        run: |
+          conda activate envr
+          Rscript -e "install.packages('units')"
+          conda deactivate
+
+
