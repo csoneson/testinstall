@@ -10,6 +10,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Install system dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update && \
+          sudo apt-get -y install libudunits2-dev libcairo2-dev
+        
       - name: setup conda
         uses: s-weigand/setup-conda@v1.0.5
         with:
